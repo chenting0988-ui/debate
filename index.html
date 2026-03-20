@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debate Arena</title>
+</head>
+<body>
+
+  <!-- Screen 1: Home -->
+  <div id="screen-home">
+    <h1>Debate Arena</h1>
+    <select id="category-select">
+      <option value="">Select a category</option>
+      <option value="Politics">Politics</option>
+      <option value="Philosophy">Philosophy</option>
+      <option value="Finance">Finance</option>
+      <option value="Economics">Economics</option>
+      <option value="History">History</option>
+      <option value="Ethics">Ethics</option>
+      <option value="Science & Technology">Science &amp; Technology</option>
+      <option value="Culture">Culture</option>
+    </select>
+    <br><br>
+    <button onclick="showScreen('debate')">Start Debate</button>
+  </div>
+
+  <!-- Screen 2: Debate -->
+  <div id="screen-debate" style="display:none">
+    <h2>Debate Screen</h2>
+    <p>Topic and position will appear here.</p>
+    <div id="chat-thread">
+      <!-- Messages will appear here -->
+    </div>
+    <input type="text" id="user-input" placeholder="Type your argument...">
+    <button>Send</button>
+    <br><br>
+    <button onclick="showScreen('end')">End Debate</button>
+  </div>
+
+  <!-- Screen 3: End -->
+  <div id="screen-end" style="display:none">
+    <h2>Session Summary</h2>
+    <p>Summary will appear here.</p>
+    <button onclick="showScreen('home')">New Debate</button>
+  </div>
+
+  <script>
+    function showScreen(name) {
+      document.getElementById('screen-home').style.display = 'none';
+      document.getElementById('screen-debate').style.display = 'none';
+      document.getElementById('screen-end').style.display = 'none';
+      document.getElementById('screen-' + name).style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
