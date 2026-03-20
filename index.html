@@ -22,13 +22,15 @@
       <option value="Culture">Culture</option>
     </select>
     <br><br>
-    <button onclick="showScreen('debate')">Start Debate</button>
+    <button onclick="startDebate()">Start Debate</button>
   </div>
 
   <!-- Screen 2: Debate -->
   <div id="screen-debate" style="display:none">
-    <h2>Debate Screen</h2>
-    <p>Topic and position will appear here.</p>
+    <div id="debate-header">
+      <p id="debate-topic"></p>
+      <p id="debate-position"></p>
+    </div>
     <div id="chat-thread">
       <!-- Messages will appear here -->
     </div>
@@ -46,6 +48,102 @@
   </div>
 
   <script>
+    const TOPICS = {
+      'Politics': [
+        'Carbon taxes are more effective than renewable energy subsidies at reducing emissions',
+        'The Electoral College should be abolished in favor of a national popular vote',
+        'Term limits for members of Congress would improve American democracy',
+        'Ranked-choice voting should replace first-past-the-post in all US elections',
+        'Foreign aid does more harm than good to recipient nations',
+        'Compulsory voting should be introduced in democratic countries',
+        'The Senate filibuster should be permanently eliminated',
+      ],
+      'Philosophy': [
+        'Free will is an illusion incompatible with a deterministic universe',
+        'Moral obligations to strangers are just as strong as obligations to family',
+        'A life without meaning is preferable to a life with false meaning',
+        'Personal identity does not persist through time — you are not the same person you were ten years ago',
+        'Objective moral truths exist independently of human belief',
+        'It is rational to fear death',
+        'Epistemic humility requires us to treat all cultures\' values as equally valid',
+      ],
+      'Finance': [
+        'Stock buybacks should be banned as a form of market manipulation',
+        'Central bank digital currencies would do more harm than good to financial privacy',
+        'Short selling should be heavily restricted to protect market stability',
+        'Algorithmic high-frequency trading should be taxed to slow speculation',
+        'Venture capital funding distorts innovation toward profit over societal benefit',
+        'The carried interest loophole is economically justified and should be preserved',
+        'Retail investors are better served by passive index funds than active management',
+      ],
+      'Economics': [
+        'A federal minimum wage of $20/hour would benefit workers on net',
+        'Free trade agreements harm developing nations more than they help',
+        'Automation will destroy more jobs than it creates over the next 20 years',
+        'Universal Basic Income is a more efficient poverty tool than targeted welfare',
+        'Austerity measures accelerate economic recovery after a financial crisis',
+        'Breaking up big tech companies would reduce innovation',
+        'Immigration has a net negative effect on wages for native low-skill workers',
+      ],
+      'History': [
+        'The atomic bombings of Hiroshima and Nagasaki were morally justified',
+        'The Industrial Revolution improved average human welfare on net',
+        'The Treaty of Versailles was the primary cause of World War II',
+        'Colonialism\'s economic legacy still drives global inequality today',
+        'The Cold War was primarily the fault of the United States',
+        'Napoleon Bonaparte did more to advance liberty than to suppress it',
+        'The printing press did more to destabilize society than any other invention',
+      ],
+      'Ethics': [
+        'Capital punishment is morally justifiable in cases of mass atrocity',
+        'We have a moral obligation to give until giving causes us significant hardship',
+        'Animals raised for food deserve the same moral consideration as pets',
+        'Whistleblowing is always ethically justified when exposing government wrongdoing',
+        'Affirmative action policies are ethically defensible means to a just end',
+        'Lying is sometimes the most ethical course of action',
+        'Parents have no right to raise their children in a particular religion',
+      ],
+      'Science & Technology': [
+        'General-purpose AI should be subject to binding international regulation',
+        'GMO crops should be embraced globally as an ethical imperative',
+        'Nuclear energy is indispensable to achieving net-zero emissions',
+        'Social media platforms bear legal responsibility for algorithmic radicalization',
+        'Gene editing of human embryos for non-medical traits should be permitted',
+        'Geoengineering the climate is too risky to research beyond the laboratory',
+        'The benefits of space exploration do not justify its costs',
+      ],
+      'Culture': [
+        'Social media has done more harm than good to adolescent mental health',
+        'Globalization is destroying irreplaceable cultural diversity',
+        'Public call-out culture is net harmful to social progress',
+        'Artistic works should be judged independently of their creators\' moral character',
+        'The decline of organized religion has weakened social cohesion in the West',
+        'Cultural appropriation, on balance, promotes cross-cultural understanding',
+        'Sports stars have a moral obligation to use their platform for political advocacy',
+      ],
+    };
+
+    // Session state
+    let currentTopic = '';
+    let currentPosition = ''; // 'FOR' or 'AGAINST'
+
+    function startDebate() {
+      const category = document.getElementById('category-select').value;
+      if (!category) {
+        alert('Please select a category first.');
+        return;
+      }
+
+      const topicList = TOPICS[category];
+      currentTopic = topicList[Math.floor(Math.random() * topicList.length)];
+      currentPosition = Math.random() < 0.5 ? 'FOR' : 'AGAINST';
+
+      document.getElementById('debate-topic').textContent = 'Topic: ' + currentTopic;
+      document.getElementById('debate-position').textContent = 'Your position: ' + currentPosition;
+
+      showScreen('debate');
+    }
+
     function showScreen(name) {
       document.getElementById('screen-home').style.display = 'none';
       document.getElementById('screen-debate').style.display = 'none';
